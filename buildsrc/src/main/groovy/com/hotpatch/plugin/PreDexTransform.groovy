@@ -16,7 +16,7 @@ public class PreDexTransform extends Transform {
         def libPath = project.project(":hack").buildDir.absolutePath.concat("/intermediates/classes/debug")
         println libPath
         Inject.appendClassPath(libPath)
-        Inject.appendClassPath("/Users/liyazhou/Library/Android/sdk/platforms/android-24/android.jar")
+        Inject.appendClassPath("/Users/xiaoliang.liu/Library/Android/sdk/platforms/android-24/android.jar")
     }
     @Override
     String getName() {

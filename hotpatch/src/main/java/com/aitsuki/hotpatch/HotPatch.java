@@ -31,6 +31,7 @@ public class HotPatch {
 
     public static void inject(String path) {
         File file = new File(path);
+        Log.e("HotpatchApplication", "inject = "+file.getAbsolutePath() +"  ###   "+ file.exists());
         if(file.exists()) {
             try {
                 // 获取classes的dexElements

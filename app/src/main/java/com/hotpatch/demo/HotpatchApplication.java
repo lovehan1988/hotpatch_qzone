@@ -1,11 +1,13 @@
 package com.hotpatch.demo;
 
 import android.app.Application;
+import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
 
 import com.aitsuki.hotpatch.HotPatch;
 
+import java.io.File;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 
@@ -30,7 +32,7 @@ public class HotpatchApplication extends Application {
 //            Log.e("BugFixApplication", dexPath + "不存在");
 //        }
         HotPatch.init(this);
-        HotPatch.inject(dexPath);
+        inject(dexPath);
     }
 
     /**
@@ -46,8 +48,18 @@ public class HotpatchApplication extends Application {
             Object baseElements = getField(pathList.getClass(), "dexElements", pathList);
 
             // 获取patch_dex的dexElements（需要先加载dex）
-            String dexopt = getDir("dexopt", 0).getAbsolutePath();
-            DexClassLoader dexClassLoader = new DexClassLoader(path, dexopt, dexopt, getClassLoader());
+//            String dexopt = getDir("dexopt", 0).getAbsolutePath();
+//            DexClassLoader dexClassLoader = new DexClassLoader(path, dexopt, dexopt, getClassLoader());
+            File dexopt = new File(getDir("dex", Context.MODE_PRIVATE), "patch_dex.jar");
+            Utils.prepareDex(this.getApplicationContext(), dexopt, "patch_dex.jar");
+
+            String dexLibPath = getDir("outdex", Context.MODE_PRIVATE)
+                    .getAbsolutePath();
+
+            DexClassLoader dexClassLoader = new DexClassLoader(dexopt.getAbsolutePath(), dexLibPath, null, getClassLoader());
+
+
+
             Object obj = getField(cl, "pathList", dexClassLoader);
             Object dexElements = getField(obj.getClass(), "dexElements", obj);
 

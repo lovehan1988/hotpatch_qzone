@@ -23,7 +23,7 @@ public class MainActivity extends Activity {
                     mCal = new Calculator();
                 }
 
-                Toast.makeText(MainActivity.this, String.valueOf(mCal.calculate()), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, ""+mCal.calculate(), Toast.LENGTH_SHORT).show();
             }
         });
     }
